@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+
+<j:jelly xmlns:j="jelly:core">
+    <torque>
+        <j:forEach var="table" items="${metadata}">
+            <table name="${table.sqlName.toLowerCase()}">
+                <j:forEach var="column" items="${table.columns}">
+                    <column name="${column.sqlName.toLowerCase()}" primaryKey="${column.primaryKey}"/>
+                </j:forEach>
+
+                <j:forEach var="foreignKey" items="${table.foreignKeys}">
+                    <foreign-key>
+                        <j:forEach var="reference" items="${foreignKey.references}">
+                            <reference foreign-column="${reference.foreignColumn.sqlName.toLowerCase()}"
+                                primary-column="${reference.primaryColumn.sqlName.toLowerCase()}"/>
+                        </j:forEach>
+                    </foreign-key>
+                </j:forEach>
+            </table>
+        </j:forEach>
+    </torque>
+
+</j:jelly>
